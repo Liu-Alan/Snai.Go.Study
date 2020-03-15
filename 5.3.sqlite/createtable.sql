@@ -1,0 +1,6 @@
+CREATE TABLE `userinfo`(
+    `uid` INTEGER PRIMARY KEY AUTOINCREMENT,
+    `username` VARCHAR(64) NOT NULL DEFAULT '',
+    `department` VARCHAR(64) NOT NULL DEFAULT '',
+    `created` DATETIME NOT NULL DEFAULT '1970-01-01'
+)

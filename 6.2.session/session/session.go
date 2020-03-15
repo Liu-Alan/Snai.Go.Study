@@ -43,7 +43,7 @@ func NewSessionManager(provideName, cookieName string, maxLifeTime int64) (*Mana
 	if !ok {
 		return nil, fmt.Errorf("session:unknown provide %q", provideName)
 	}
-	return &Manager{cookieName: cookieName, provider: provide, maxLifeTime: maxLifeTime}, error
+	return &Manager{cookieName: cookieName, provider: provide, maxLifeTime: maxLifeTime}, nil
 }
 
 //注册 由实现Provider接口的结构体调用
@@ -115,7 +115,7 @@ func (manager *Manager) SessionDestroy(w http.ResponseWriter, r *http.Request) {
 			HttpOnly: true,
 			Secure:   false,
 			Expires:  expiration,
-			MaxAge:   -1,
+			MaxAge:   0,
 		}
 		http.SetCookie(w, &cookie)
 	}

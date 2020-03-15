@@ -80,9 +80,9 @@ func (fromMenory *FromMemory) SessionRead(sid string) (session.Session, error) {
 }
 
 func (fromMemory *FromMemory) SessionDestroy(sid string) error {
-	if element, ok := frommemory.sessions[sid]; ok {
-		delete(frommemory.sessions, sid)
-		frommemory.list.Remove(element)
+	if element, ok := fromMemory.sessions[sid]; ok {
+		delete(fromMemory.sessions, sid)
+		fromMemory.list.Remove(element)
 		return nil
 	}
 	return nil

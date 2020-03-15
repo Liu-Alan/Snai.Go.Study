@@ -1,1 +1,1 @@
-# -Snai.Go.Study
+# Snai.Go.Study

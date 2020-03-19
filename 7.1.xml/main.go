@@ -58,18 +58,18 @@ type server struct {
 }
 
 func main() {
-	v := &Servers{Version: "1"}
+	v := Servers{Version: "1"}
 	v.Svs = append(v.Svs, server{"Shanghai_VPN", "127.0.0.1"})
 	v.Svs = append(v.Svs, server{"Beiging_VPN", "127.0.0.1"})
 
-	output, err := xml.MarshalIndent(v, "  ", "    ")
+	data, err := xml.MarshalIndent(&v, "  ", "    ")
 	if err != nil {
 		fmt.Printf("error:%v\n", err)
 		return
 	}
 
 	os.Stdout.Write([]byte(xml.Header))
-	os.Stdout.Write(output)
+	os.Stdout.Write(data)
 }
 */
 //写入
@@ -92,11 +92,11 @@ func main() {
 	}
 	defer file.Close()
 
-	v := &Servers{Version: "1"}
+	v := Servers{Version: "1"}
 	v.Svs = append(v.Svs, server{"Shanghai_VPN", "127.0.0.2"})
 	v.Svs = append(v.Svs, server{"Beiging_VPN", "127.0.0.2"})
 
-	data, err := xml.MarshalIndent(v, "  ", "    ")
+	data, err := xml.MarshalIndent(&v, "  ", "    ")
 	if err != nil {
 		fmt.Printf("error:%v\n", err)
 		return
@@ -145,10 +145,10 @@ func main() {
 	}
 
 	for i, _ := range v.Svs {
-		v.Svs[i].ServerIP = "192.168.0.1"
+		v.Svs[i].ServerIP = "192.168.0.2"
 	}
 
-	data, err = xml.MarshalIndent(v, "  ", "    ")
+	data, err = xml.MarshalIndent(&v, "  ", "    ")
 	if err != nil {
 		fmt.Printf("error:%v\n", err)
 		return

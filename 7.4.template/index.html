@@ -1,0 +1,20 @@
+<html>
+    <head>
+        <title>template</title>
+    </head>
+    <body>
+        hello {{.UserName}}!
+        {{range .Emails}}
+            an email {{.|emailDeal}}
+        {{end}}
+        {{with .Friends}}
+            {{range .}}
+                {{if eq .Fname `minux.ma`}}
+                    my friend name is {{.Fname}} 
+                {{end}}
+            {{end}}
+        {{end}}
+        <br />
+        {{with $x := .UserName | printf "%q"}}{{$x}}{{end}}
+    </body>
+</html>

@@ -51,9 +51,25 @@ func index(w http.ResponseWriter, r *http.Request) {
 	tmpl.Execute(w, p)
 }
 
+type TmplModel struct {
+	Header  string
+	Content string
+	Footer  string
+}
+
+func content(w http.ResponseWriter, r *http.Request) {
+	model := TmplModel{
+		Header:  "网页标题",
+		Content: "网页内容",
+		Footer:  "网页底部"}
+	tmpl, _ := template.ParseFiles("header.html", "content.html", "footer.html")
+	tmpl.ExecuteTemplate(w, "content", model)
+}
+
 func main() {
 	http.HandleFunc("/", index)
 	http.HandleFunc("/index", index)
+	http.HandleFunc("/content", content)
 
 	err := http.ListenAndServe(":9090", nil)
 	if err != nil {

@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net"
 	"os"
+	"strconv"
 	"time"
 )
 
@@ -15,9 +16,29 @@ func checkError(err error) {
 }
 
 func handleClient(conn net.Conn) {
+	conn.SetReadDeadline(time.Now().Add(2 * time.Minute))
 	defer conn.Close()
-	daytime := time.Now().String()
-	conn.Write([]byte(daytime))
+
+	request := make([]byte, 128)
+	for {
+		readlen, err := conn.Read(request)
+		if err != nil {
+			fmt.Println(err)
+		}
+
+		if readlen == 0 {
+			fmt.Println("connection already closed by client")
+			break
+		} else if string(request) == "timestamp" {
+			daytime := strconv.FormatInt(time.Now().Unix(), 10)
+			conn.Write([]byte(daytime))
+		} else {
+			daytime := time.Now().String()
+			conn.Write([]byte(daytime))
+		}
+	}
+
+	request = make([]byte, 128) // clear last read content
 }
 
 func main() {

@@ -59,7 +59,7 @@ func main() {
 }
 */
 /*
-//写入
+//写入 os.O_TRUNC 打开文件时先清空文件，默认是追加
 func main() {
 	file, err := os.OpenFile("servers.json", os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0666)
 	if err != nil {

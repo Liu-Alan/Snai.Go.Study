@@ -36,9 +36,9 @@ func handleClient(conn net.Conn) {
 			daytime := time.Now().String()
 			conn.Write([]byte(daytime))
 		}
-	}
 
-	request = make([]byte, 128) // clear last read content
+		request = make([]byte, 128) // clear last read content
+	}
 }
 
 func main() {
@@ -52,7 +52,7 @@ func main() {
 	for {
 		conn, err := listener.Accept()
 		if err != nil {
-			fmt.Fprintf("Fatal error: %s", err.Error())
+			fmt.Println(err)
 			continue
 		}
 

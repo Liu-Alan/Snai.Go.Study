@@ -27,17 +27,9 @@ func main() {
 	conn, err := net.DialTCP("tcp", nil, tcpAddr)
 	checkError(err)
 
-	//timestamp
 	_, err = conn.Write([]byte("timestamp"))
 	checkError(err)
 	result, err := ioutil.ReadAll(conn)
-	checkError(err)
-	fmt.Println(string(result))
-
-	//time
-	_, err = conn.Write([]byte("time"))
-	checkError(err)
-	result, err = ioutil.ReadAll(conn)
 	checkError(err)
 	fmt.Println(string(result))
 

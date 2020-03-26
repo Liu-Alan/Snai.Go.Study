@@ -21,15 +21,15 @@ func handleClient(conn net.Conn) {
 
 	request := make([]byte, 128)
 	for {
-		readlen, err := conn.Read(request)
+		len, err := conn.Read(request)
 		if err != nil {
 			fmt.Println(err)
 		}
 
-		if readlen == 0 {
+		if len == 0 {
 			fmt.Println("connection already closed by client")
 			break
-		} else if string(request) == "timestamp" {
+		} else if string(request[:len]) == "timestamp" {
 			daytime := strconv.FormatInt(time.Now().Unix(), 10)
 			conn.Write([]byte(daytime))
 		} else {

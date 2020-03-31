@@ -56,6 +56,7 @@ func main() {
 	contextLogger.Info("Me too")
 }
 */
+/*
 import (
 	"os"
 
@@ -88,3 +89,4 @@ func main() {
 		"filename": "123.txt",
 	}).Info("打开文件失败")
 }
+*/

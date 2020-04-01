@@ -90,3 +90,64 @@ func main() {
 	}).Info("打开文件失败")
 }
 */
+
+import (
+	rotatelogs "github.com/lestrrat-go/file-rotatelogs"
+	"github.com/rifflock/lfshook"
+	"github.com/sirupsen/logrus"
+	log "github.com/sirupsen/logrus"
+	"time"
+)
+
+func newLfsHook(logName string, logLevel string) log.Hook {
+	writer, err := rotatelogs.New(
+		logName+".%Y%m%d%H",
+		// WithLinkName为最新的日志建立软连接，以方便随着找到当前日志文件
+		rotatelogs.WithLinkName(logName),
+
+		// WithRotationTime设置日志分割的时间，这里设置为一天分割一次
+		rotatelogs.WithRotationTime(time.Hour*24),
+
+		// WithMaxAge和WithRotationCount二者只能设置一个，
+		// WithMaxAge设置文件清理前的最长保存时间，
+		// WithRotationCount设置文件清理前最多保存的个数。
+		//rotatelogs.WithRotationCount(maxRemainCnt),
+		rotatelogs.WithMaxAge(time.Hour*24*30),
+	)
+
+	if err != nil {
+		log.Errorf("config local file system for logger error: %v", err)
+	}
+
+	// 日志格式化为JSON而不是默认的ASCII
+	log.SetFormatter(&logrus.JSONFormatter{})
+
+	// 设置记录日志级别
+	level, err := log.ParseLevel(logLevel)
+	if err != nil {
+		log.SetLevel(log.WarnLevel)
+	} else {
+		log.SetLevel(level)
+	}
+
+	lfsHook := lfshook.NewHook(lfshook.WriterMap{
+		log.DebugLevel: writer,
+		log.InfoLevel:  writer,
+		log.WarnLevel:  writer,
+		log.ErrorLevel: writer,
+		log.FatalLevel: writer,
+		log.PanicLevel: writer,
+	}, &log.JSONFormatter{})
+
+	return lfsHook
+}
+
+func main() {
+	logName := "log.txt"
+	logLevel := "info"
+	log.AddHook(newLfsHook(logName, logLevel))
+	log.Info("测试日志写入")
+	log.WithFields(log.Fields{
+		"parms": "参数不对",
+	}).Error("测试日志警告写入")
+}

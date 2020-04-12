@@ -100,6 +100,20 @@ import (
 )
 
 func newLfsHook(logName string, logLevel string) log.Hook {
+
+	//控制台输出
+	// 日志格式化为JSON而不是默认的ASCII
+	log.SetFormatter(&logrus.JSONFormatter{})
+
+	// 设置记录日志级别
+	level, err := log.ParseLevel(logLevel)
+	if err != nil {
+		log.SetLevel(log.WarnLevel)
+	} else {
+		log.SetLevel(level)
+	}
+
+	//文件输出
 	writer, err := rotatelogs.New(
 		logName+".%Y%m%d%H",
 		// WithLinkName为最新的日志建立软连接，以方便随着找到当前日志文件
@@ -117,17 +131,6 @@ func newLfsHook(logName string, logLevel string) log.Hook {
 
 	if err != nil {
 		log.Errorf("config local file system for logger error: %v", err)
-	}
-
-	// 日志格式化为JSON而不是默认的ASCII
-	log.SetFormatter(&logrus.JSONFormatter{})
-
-	// 设置记录日志级别
-	level, err := log.ParseLevel(logLevel)
-	if err != nil {
-		log.SetLevel(log.WarnLevel)
-	} else {
-		log.SetLevel(level)
 	}
 
 	lfsHook := lfshook.NewHook(lfshook.WriterMap{

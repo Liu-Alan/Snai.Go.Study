@@ -11,33 +11,49 @@ func main() {
 		fmt.Println(strings.Contains("seafood", "bar"))
 		fmt.Println(strings.Contains("seafood", ""))
 		fmt.Println(strings.Contains("", ""))
+		//true
+		//false
+		//true
+		//true
 	*/
 	/*
 		s := []string{"foo", "bar", "baz"}
 		fmt.Println(strings.Join(s, ","))
+		//Output:foo, bar, baz
 	*/
 	/*
 		fmt.Println(strings.Index("chicken", "ken"))
 		fmt.Println(strings.Index("chicken", "dmr"))
+		//Output:4
+		//-1
 	*/
 	/*
 		fmt.Println("ba" + strings.Repeat("na", 2))
+		//Output:banana
 	*/
 	/*
 		fmt.Println(strings.Replace("oink oink oink", "k", "ky", 2))
 		fmt.Println(strings.Replace("oink oink oink", "oink", "moo", -1))
+		//Output:oinky oinky oink
+		//moo moo moo
 	*/
 	/*
 		fmt.Printf("%q\n", strings.Split("a,b,c", ","))
 		fmt.Printf("%q\n", strings.Split("a man a plan a canal panama", "a "))
 		fmt.Printf("%q\n", strings.Split(" xyz ", ""))
 		fmt.Printf("%q\n", strings.Split("", "Bernardo O'Higgins"))
+		//Output:["a" "b" "c"]
+		//["" "man " "plan " "canal panama"]
+		//[" " "x" "y" "z" " "]
+		//[""]
 	*/
 	/*
 		fmt.Printf("[%q]\n", strings.Trim(" !!! Achtung !!! ", "! "))
+		//Output:["Achtung"]
 	*/
 	/*
 		fmt.Printf("Fields are: %q\n", strings.Fields("  foo bar  baz    "))
+		//Output:Fields are: ["foo" "bar" "baz"]
 	*/
 	/*
 		str := make([]byte, 0, 100)
